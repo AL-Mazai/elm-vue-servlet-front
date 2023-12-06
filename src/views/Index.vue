@@ -333,28 +333,6 @@ import Footer from '../components/Footer.vue';
 
 export default {
     name: 'Index',
-    mounted() {
-        // document.onscroll = () => {
-        //     //获取滚动条位置
-        //     let s1 = document.documentElement.scrollTop;
-        //     let s2 = document.body.scrollTop;
-        //     let scroll = s1 == 0 ? s2 : s1;
-        //     //获取视口宽度
-        //     let width = document.documentElement.clientWidth;
-        //
-        //     //获取顶部固定块
-        //     let search = this.$refs.fixedBox;
-        //
-        //     //判断滚动条超过视口宽度的12%时，搜索块变固定定位
-        //     if (scroll > width * 0.12) {
-        //         search.style.position = 'fixed';
-        //         search.style.left = '0';
-        //         search.style.top = '0';
-        //     } else {
-        //         search.style.position = 'static';
-        //     }
-        // }
-    },
     destroyed() {
         //当切换到其他组件时，就不需要document滚动条事件，所以将此事件去掉
         document.onscroll = null;

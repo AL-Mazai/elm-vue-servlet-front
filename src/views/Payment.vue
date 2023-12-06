@@ -86,6 +86,7 @@ export default {
     }
 }
 </script>
+
 <style scoped>
 /****************** 总容器 ******************/
 .wrapper {

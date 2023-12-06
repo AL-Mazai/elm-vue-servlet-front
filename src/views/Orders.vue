@@ -52,6 +52,7 @@ export default {
         }
     },
     created() {
+        console.log(this.businessId)
         this.user = this.$getSessionStorage('user');
         this.deliveryaddress = this.$getLocalStorage(this.user.userId);
 
@@ -107,8 +108,14 @@ export default {
                 orderTotal: this.totalPrice
             })).then(response => {
                 let orderId = response.data;
+                console.log(orderId)
                 if (orderId > 0) {
-                    this.$router.push({path: '/payment', query: {orderId: orderId}});
+                    this.$router.push(
+                        {
+                            path: '/payment',
+                            query: {orderId: orderId}
+                        }
+                    );
                 } else {
                     alert('创建订单失败！');
                 }

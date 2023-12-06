@@ -53,12 +53,12 @@
             </div>
             <div class="cart-right">
                 <!-- 不够起送费 -->
-                <div class="cart-right-item" v-show="totalSettle<business.starPrice"
+                <div class="cart-right-item" v-show="totalSettle < business.starPrice"
                      style="background-color: #535356;cursor: default;">
                     &#165;{{ business.starPrice }}起送
                 </div>
                 <!-- 达到起送费 -->
-                <div class="cart-right-item" @click="toOrder" v-show="totalSettle>=business.starPrice">
+                <div class="cart-right-item" @click="toOrder" v-show="totalSettle >= business.starPrice">
                     去结算
                 </div>
             </div>
@@ -211,12 +211,20 @@ export default {
             });
         },
         toOrder() {
-            this.$router.push({
-                path: '/orders',
-                query: {
-                    businessId: this.business.businessId
+            console.log("hello")
+            this.$router.push(
+                {
+                    path: '/orders',
+                    query: {
+                        businessId: this.business.businessId
+                    }
                 }
-            });
+            );
+            // this.$router.push(
+            //     {
+            //         path: '/index',
+            //     }
+            // );
         }
     },
     computed: {
