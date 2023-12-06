@@ -32,28 +32,18 @@ export default {
     data() {
         return {
             orderTypeId: this.$route.query.orderTypeId,
+            // orderTypeId: 1,
             businessArr: [],
             user: {}
         }
     },
-    created() {
-        this.user = this.$getSessionStorage('user');
-
-        //根据orderTypeId查询商家信息
-        this.$axios.post('BusinessController/listBusinessByOrderTypeId', this.$qs.stringify({
-            orderTypeId: this.orderTypeId
-        })).then(response => {
-            this.businessArr = response.data;
-            //判断是否登录
-            if (this.user != null) {
-                this.listCart();
-            }
-        }).catch(error => {
-            console.error(error);
-        });
-    },
     components: {
         Footer
+    },
+    created() {
+        this.user = this.$getSessionStorage('user');
+        //初始化商家列表
+        this.getBusinessList()
     },
     methods: {
         listCart() {
@@ -76,11 +66,32 @@ export default {
             });
         },
         toBusinessInfo(businessId) {
-            this.$router.push({path: '/businessInfo', query: {businessId: businessId}});
+            this.$router.push(
+                {
+                    path: '/businessInfo',
+                    query: {businessId: businessId}
+                }
+            );
+        },
+        getBusinessList() {
+            //根据orderTypeId查询商家信息
+            this.$axios.post('BusinessController/listBusinessByOrderTypeId', this.$qs.stringify({
+                orderTypeId: this.orderTypeId
+            })).then(response => {
+                this.businessArr = response.data;
+                console.log(this.businessArr)
+                //判断是否登录
+                if (this.user != null) {
+                    this.listCart();
+                }
+            }).catch(error => {
+                console.error(error);
+            });
         }
     }
 }
 </script>
+
 <style scoped>
 /****************** 总容器 ******************/
 .wrapper {

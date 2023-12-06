@@ -87,6 +87,7 @@ export default {
                 alert('联系人地址不能为空！');
                 return;
             }
+
             this.deliveryAddress.userId = this.user.userId;
             this.$axios.post('DeliveryAddressController/saveDeliveryAddress',
                 this.$qs.stringify(
@@ -104,6 +105,7 @@ export default {
     }
 }
 </script>
+
 <style scoped>
 /*************** 总容器 ***************/
 .wrapper {

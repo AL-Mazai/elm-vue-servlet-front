@@ -2,6 +2,11 @@ import { createApp } from 'vue'
 import App from './App.vue'
 const app = createApp(App)
 
+// axios配置
+import axios from 'axios'
+axios.defaults.baseURL = 'http://localhost:8082/elm_back_war/';//基础url部分
+app.config.globalProperties.$axios = axios;//将axios挂载到vue实例上(this.$axios)
+
 //font-awesome组件
 import 'font-awesome/css/font-awesome.min.css'
 //normalize.css组件
@@ -11,15 +16,17 @@ import 'normalize.css/normalize.css'
 import router from './router'
 router.beforeEach(function(to,from,next){
     let user = sessionStorage.getItem('user');
+
     //除了登录、注册、首页、商家列表、商家信息之外，都需要判断是否登录
     if(! (to.path=='/'||to.path=='/index'||to.path=='/businessList'||
-        to.path=='/businessInfo'||to.path==' /login'||to.path=='/register')){
+        to.path=='/businessInfo'||to.path=='/login'||to.path=='/register')){
         if(user==null){
             router.push('/login');
-            location.reload();
+            // location.reload();
         }
+    }else {
+        next();
     }
-    next();
 });
 app.use(router)
 
@@ -31,12 +38,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 app.use(ElementPlus)
-
-
-// axios配置
-import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:8080/elm/';//基础url部分
-app.config.globalProperties.$axios = axios;//将axios挂载到vue实例上(this.$axios)
 
 // 引入qs，用于url参数转化（parse和stringify）的库
 import qs from 'qs';

@@ -27,7 +27,7 @@
                 </div>
                 <div class="food-right">
                     <div>
-                        <i class="fa fa-minus-circle" @click="minus(index)" v￾show="item.quantity!=0"></i>
+                        <i class="fa fa-minus-circle" @click="minus(index)" v-show="item.quantity!=0"></i>
                     </div>
                     <p><span v-show="item.quantity!=0">{{ item.quantity }}</span></p>
                     <div>
@@ -40,7 +40,7 @@
         <div class="cart">
             <div class="cart-left">
                 <div class="cart-left-icon"
-                     :style="totalQuantity==0?'background￾color:#505051;':'background-color:#3190E8;'">
+                     :style="totalQuantity==0?'background-color:#505051;':'background-color:#3190E8;'">
                     <i class="fa fa-shopping-cart"></i>
                     <div class="cart-left-icon-quantity" v-show="totalQuantity!=0">
                         {{ totalQuantity }}
@@ -58,7 +58,7 @@
                     &#165;{{ business.starPrice }}起送
                 </div>
                 <!-- 达到起送费 -->
-                <div class="cart-right-item" @click="toOrder" v￾show="totalSettle>=business.starPrice">
+                <div class="cart-right-item" @click="toOrder" v-show="totalSettle>=business.starPrice">
                     去结算
                 </div>
             </div>
@@ -78,14 +78,17 @@ export default {
     },
     created() {
         this.user = this.$getSessionStorage('user');
+
         //根据businessId查询商家信息
         this.$axios.post('BusinessController/getBusinessById', this.$qs.stringify({
             businessId: this.businessId
         })).then(response => {
             this.business = response.data;
+            console.log(this.business)
         }).catch(error => {
-            console.error(error);
+            console.error("@", error);
         });
+
         //根据businessId查询所属食品信息
         this.$axios.post('FoodController/listFoodByBusinessId', this.$qs.stringify({
             businessId: this.businessId
@@ -240,6 +243,7 @@ export default {
     }
 }
 </script>
+
 <style scoped>
 /****************** 总容器 ******************/
 .wrapper {
