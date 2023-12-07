@@ -5,9 +5,9 @@
             <p>我的订单</p>
         </header>
         <!-- 订单列表部分 -->
-        <h3>未支付订单信息：</h3>
+        <!-- <h3>未支付订单信息：</h3>
         <ul class="order">
-            <li v-for="item in orderArr" v-if="item.orderState==0">
+            <li v-for="item in orderArr">
                 <div class="order-info">
                     <p>
                         {{ item.business.businessName }}
@@ -30,9 +30,9 @@
                 </ul>
             </li>
         </ul>
-        <h3>已支付订单信息：</h3>
+        <h3>已支付订单信息：</h3> -->
         <ul class="order">
-            <li v-for="item in orderArr" v-if="item.orderState==1">
+            <li v-for="item in orderArr">
                 <div class="order-info">
                     <p>
                         {{ item.business.businessName }}
@@ -71,6 +71,7 @@ export default {
     },
     created() {
         this.user = this.$getSessionStorage('user');
+        console.log(this.user)
 
         this.$axios.post('OrdersController/listOrdersByUserId', this.$qs.stringify({
             userId: this.user.userId
@@ -80,12 +81,14 @@ export default {
                 orders.isShowDetailet = false;
             }
             this.orderArr = result;
+            console.log(this.orderArr)
         }).catch(error => {
             console.error(error);
         });
     },
     methods: {
         detailetShow(orders) {
+            console.log(orders)
             orders.isShowDetailet = !orders.isShowDetailet;
         }
     },
@@ -94,6 +97,7 @@ export default {
     }
 }
 </script>
+
 <style scoped>
 /****************** 总容器 ******************/
 .wrapper {
@@ -129,6 +133,8 @@ export default {
 
 .wrapper .order {
     width: 100%;
+
+    margin-top: 12vw;
 }
 
 .wrapper .order li {
